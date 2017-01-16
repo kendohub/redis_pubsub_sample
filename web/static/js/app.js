@@ -1,5 +1,9 @@
 import {Socket} from "phoenix"
 
+// ****
+var users = {};
+// ****
+
 var socket = new Socket("/socket");
 socket.connect();
 var channel = socket.channel("room:lobby", {});
@@ -10,7 +14,20 @@ $("form").submit(function(e) {
 });
 
 channel.on("receive_message", function(dt) {
-    prepend_message(dt.message);
+    //prepend_message(dt.message);
+    var tmp = dt.message.split(",");
+    if (!!tmp == false || tmp.length == 0) {
+      return;
+    } else if (!!users[tmp[0]]) {
+      users[tmp[0]]["marker"].setMap(null);
+    }
+    users[tmp[0]] = {lat: parseFloat(tmp[1]), lng: parseFloat(tmp[2])};
+    var marker = new google.maps.Marker({
+      position: users[tmp[0]],
+      map: map,
+      title: tmp[0]
+    });
+    users[tmp[0]]["marker"] = marker;
 });
 
 function send_message(e, message) {
@@ -45,7 +62,8 @@ function geoStart() {
   return navigator.geolocation.watchPosition(function(position) {
     var latitude  = position.coords.latitude;
     var longitude = position.coords.longitude;
-    channel.push("send_message", {message: latitude + "," + longitude});
+    var name = $("#myname").val();
+    channel.push("send_message", {message: name + "," + latitude + "," + longitude});
     //prepend_message(latitude + "," + longitude);
   }, function() {
     prepend_message("error");

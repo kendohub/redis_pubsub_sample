@@ -10,7 +10,7 @@ defmodule RedisPubsubSample.RoomChannel do
   end
 
   def handle_in("send_message", %{"message" => message}, socket) do
-    Logger.debug message
+    Logger.info message
     broadcast! socket, "receive_message", %{message: message}
     {:noreply, socket}
   end

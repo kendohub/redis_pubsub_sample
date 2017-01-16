@@ -14,24 +14,47 @@
       .received-message:first-child {
         font-size: 2em;
       }
+      html, body { height: 100%; margin: 0; padding: 0; }
+      #map { height: 100%; }
     </style>
   </head>
 
   <body>
     <div class="container" role="main">
+      <label for="myname">Name:</label>
+      <input type="text" class="" id="myname"><br />
+
       <button type="button" class="btn btn-default" id="start">Start</button>
       <button type="button" class="btn btn-default" id="stop">Stop</button>
       <form class="form-inline">
+        <!--
         <div class="form-group">
           <input type="text" class="form-control" id="input-send-message">
         </div>
         <button type="submit" class="btn btn-default">Send</button>
+      -->
       </form>
-      <div id="received-messages">
-      </div>
     </div>
+      <div id="received-messages" style="visible:false">
+      </div>
+
+    <div id="map"></div>
 
     <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
-  </body>
+    <script type="text/javascript">
+
+var map;
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 35.658581, lng: 139.745433},
+    zoom: 11
+  });
+}
+
+    </script>
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap">
+    </script>
+    </body>
 </html>
