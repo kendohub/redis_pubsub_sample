@@ -2,7 +2,7 @@ defmodule RedisPubsubSample.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", RedisPubsubSample.RoomChannel
+  channel "room:*", RedisPubsubSample.RoomChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket

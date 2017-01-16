@@ -2,34 +2,36 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Hello RedisPubsubSample!</title>
+    <title>Phoenix PubSub Sample</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <style>
+      .received-message {
+        color: #555;
+        font-style: italic;
+        padding: 10px 0 5px;
+        border-bottom: 1px solid #ddd;
+      }
+      .received-message:first-child {
+        font-size: 2em;
+      }
+    </style>
   </head>
 
   <body>
-    <div class="container">
-      <header class="header">
-        <nav role="navigation">
-          <ul class="nav nav-pills pull-right">
-            <li><a href="http://www.phoenixframework.org/docs">Get Started</a></li>
-          </ul>
-        </nav>
-        <span class="logo"></span>
-      </header>
+    <div class="container" role="main">
+      <button type="button" class="btn btn-default" id="start">Start</button>
+      <button type="button" class="btn btn-default" id="stop">Stop</button>
+      <form class="form-inline">
+        <div class="form-group">
+          <input type="text" class="form-control" id="input-send-message">
+        </div>
+        <button type="submit" class="btn btn-default">Send</button>
+      </form>
+      <div id="received-messages">
+      </div>
+    </div>
 
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
-
-      <main role="main">
-        <%= render @view_module, @view_template, assigns %>
-      </main>
-
-    </div> <!-- /container -->
+    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>
